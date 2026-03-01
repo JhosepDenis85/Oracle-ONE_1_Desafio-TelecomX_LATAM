@@ -60,7 +60,7 @@ Identificar **patrones y segmentos de alto riesgo** mediante análisis de datos 
 ```
 Desafio 1/
 │
-├── TelecomX_LATAM_v9_Final.ipynb    # Notebook principal con análisis completo
+├── TelecomX_LATAM_F.ipynb           # Notebook principal con análisis completo
 ├── TelecomX_Data.json               # Dataset (cargado desde GitHub)
 ├── TelecomX_diccionario.md          # Diccionario de datos
 ├── README.md                        # Este archivo
@@ -74,7 +74,7 @@ Desafio 1/
 ### Requisitos del Sistema
 
 - **Python**: 3.8 o superior
-- **Entorno recomendado**: Google Colab (online, sin instalación) o Jupyter Notebook
+- **Entorno recomendado**: Google Colab (online, sin instalación)  
 - **Memoria RAM**: Mínimo 4GB
 - **Conexión a Internet**: Necesaria para cargar datos desde GitHub
 
@@ -97,7 +97,7 @@ El proyecto utiliza las siguientes bibliotecas:
 1. **Abrir el notebook directamente en Google Colab**:
    - Ve a [Google Colab](https://colab.research.google.com/)
    - Selecciona `Archivo > Abrir notebook`
-   - Sube el archivo `TelecomX_LATAM_v9_Final.ipynb`
+   - Sube el archivo `+.ipynb`
 
 2. **Las dependencias ya están preinstaladas** en Colab (pandas, matplotlib)
 
@@ -112,7 +112,7 @@ El proyecto utiliza las siguientes bibliotecas:
 ```bash
 # Si tienes Git instalado
 git clone <url-del-repositorio>
-cd "Desafio 1"
+cd "Oracle ONE_1_Desafio TelecomX_LATAM"
 
 # O descarga el ZIP y extráelo
 ```
@@ -146,7 +146,7 @@ pip install pandas matplotlib openpyxl jupyter notebook
 jupyter notebook
 ```
 
-Se abrirá automáticamente en tu navegador. Navega a `TelecomX_LATAM_v9_Final.ipynb` y ábrelo.
+Se abrirá automáticamente en tu navegador. Navega a `TelecomX_LATAM_F.ipynb` y ábrelo.
 
 ---
 
@@ -169,15 +169,7 @@ Menú → Entorno de ejecución → Ejecutar todas
 En Jupyter Notebook:
 ```
 Menú → Cell → Run All
-```
 
-### Tiempo de Ejecución Estimado
-
-- ⏱️ **Ejecución completa**: 2-3 minutos
-- ⏱️ **Carga de datos**: ~10 segundos
-- ⏱️ **Visualizaciones**: ~30 segundos
-
----
 
 ## 📚 Descripción de las Secciones
 
@@ -250,12 +242,12 @@ El notebook está organizado en **15 secciones principales**:
 - Relaciones entre variables usando `pd.crosstab()`
 - Identificación de factores de riesgo
 
-### 1️⃣1️⃣ Reto 6: Distribución de Evasión
+### 1️⃣1️⃣  Distribución de Evasión
 - **Visualizaciones**:
   - Gráfico de barras: Conteo de clientes por estado de churn
   - Gráfico circular (pie chart): Proporción de churn
 
-### 1️⃣2️⃣ Reto 7: Recuento por Variables Categóricas
+### 1️⃣2️⃣ Recuento por Variables Categóricas
 - **Análisis de churn por**:
   - Género
   - Tipo de Contrato
@@ -285,7 +277,7 @@ Documento ejecutivo con:
 Al ejecutar el notebook completo, obtendrás:
 
 ### Outputs Visuales
-- ✅ **21 visualizaciones** (gráficos de barras, circulares, histogramas, boxplots)
+- ✅ **visualizaciones** (gráficos de barras, circulares, histogramas, boxplots)
 - ✅ **Tablas de estadísticas descriptivas** para variables numéricas
 - ✅ **Tablas de contingencia** para análisis categórico
 
@@ -302,104 +294,6 @@ Al ejecutar el notebook completo, obtendrás:
 ### Archivo Exportado
 - `df_flat.xlsx`: DataFrame procesado (opcional)
 
----
-
-## ⚠️ Problemas Comunes y Soluciones
-
-### Problema 1: Error al cargar datos desde GitHub
-
-**Error**:
-```
-URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED]>
-```
-
-**Solución**:
-```python
-# Agregar al inicio del notebook
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
-```
-
----
-
-### Problema 2: ValueError en gráfico circular (pie chart)
-
-**Error**:
-```
-ValueError: 'explode' must be of length 'x', not 2
-```
-
-**Solución** (YA CORREGIDA en v9_Final):
-```python
-# Usar explode dinámico
-explode = tuple([0.05] * len(churn_counts))
-plt.pie(churn_counts, explode=explode, ...)
-```
-
----
-
-### Problema 3: Columnas no encontradas después de renombrado
-
-**Error**:
-```
-KeyError: 'Cargo_Mensual'
-```
-
-**Solución**:
-```python
-# Usar condicional para detectar nombre de columna
-col_mensual = 'Cargo_Mensual' if 'Cargo_Mensual' in df_flat.columns else 'account.Charges.Monthly'
-df_flat[col_mensual].mean()
-```
-
----
-
-### Problema 4: Gráficos no se visualizan en Jupyter
-
-**Solución**:
-```python
-# Agregar al inicio del notebook
-%matplotlib inline
-import matplotlib.pyplot as plt
-```
-
----
-
-### Problema 5: Error de memoria al exportar Excel
-
-**Error**:
-```
-MemoryError
-```
-
-**Solución**:
-```python
-# Exportar solo columnas necesarias
-df_flat[['customerID', 'Churn', 'Cargo_Mensual']].to_excel('df_flat_lite.xlsx')
-
-# O exportar a CSV (más eficiente)
-df_flat.to_csv('df_flat.csv', index=False)
-```
-
----
-
-### Problema 6: Versión de pandas incompatible
-
-**Error**:
-```
-AttributeError: 'DataFrame' object has no attribute 'append'
-```
-
-**Solución**:
-```bash
-# Actualizar pandas
-pip install --upgrade pandas
-
-# O usar concat en lugar de append
-pd.concat([df1, df2], ignore_index=True)
-```
-
----
 
 ## 🗂️ Estructura de Datos
 
@@ -465,17 +359,13 @@ https://raw.githubusercontent.com/ingridcristh/challenge2-data-science-LATAM/mai
 
 El notebook genera las siguientes visualizaciones:
 
-### Reto 6 (3 gráficos)
+### Desafio (16 gráficos)
 1. Gráfico de barras de distribución de churn
 2. Gráfico circular de proporción de churn
-
-### Reto 7 (8 gráficos)
 3. Churn por género (tabla + gráfico)
 4. Churn por tipo de contrato (tabla + gráfico de barras apiladas)
 5. Churn por servicio de internet (tabla + gráfico)
 6. Churn por método de pago (tabla + gráfico horizontal)
-
-### Reto 8 (10 gráficos)
 7. Estadísticas de cargo total por churn
 8. Histograma de cargo total
 9. Boxplot de cargo total
@@ -484,82 +374,7 @@ El notebook genera las siguientes visualizaciones:
 12. Histograma de antigüedad
 13. Boxplot de antigüedad
 14. Comparación de medias (3 variables)
-
-### Informe Final (2 gráficos)
 15. Visualización resumen de distribución general
 16. Comparación de medias de variables numéricas
 
-**Total: 21+ visualizaciones**
-
----
-
-## 🎓 Habilidades Demostradas
-
-Este proyecto demuestra competencias en:
-
-- ✅ **Extracción de datos** desde APIs/GitHub
-- ✅ **Transformación de datos** (JSON anidado → tabla plana)
-- ✅ **Limpieza de datos** (nulos, tipos, outliers)
-- ✅ **Ingeniería de características** (feature engineering)
-- ✅ **Análisis exploratorio de datos** (EDA)
-- ✅ **Visualización de datos** con matplotlib
-- ✅ **Análisis estadístico descriptivo**
-- ✅ **Interpretación de resultados** y generación de insights
-- ✅ **Comunicación técnica** (informe ejecutivo)
-- ✅ **Pensamiento analítico** orientado a negocio
-
----
-
-## 🤝 Contribución
-
-Si deseas contribuir a este proyecto:
-
-1. **Fork** el repositorio
-2. Crea una **rama** para tu feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** tus cambios (`git commit -m 'Add: AmazingFeature'`)
-4. **Push** a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un **Pull Request**
-
----
-
-## 📧 Contacto
-
-**Proyecto desarrollado por**: Equipo de Ciencia de Datos TelecomX  
-**Fecha de creación**: Febrero 2026  
-**Versión**: v9 Final  
-
----
-
-## 📄 Licencia
-
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
-
----
-
-## 🔖 Notas Adicionales
-
-### Próximos Pasos (Roadmap)
-
-- [ ] Implementar modelo predictivo de churn con Machine Learning
-- [ ] Desarrollar dashboard interactivo con Plotly/Dash
-- [ ] Análisis de series temporales (evolución del churn)
-- [ ] Segmentación de clientes con clustering (K-means)
-- [ ] Optimización de hiperparámetros con GridSearchCV
-- [ ] Implementación de API REST para predicciones
-
-### Recursos Adicionales
-
-- 📖 [Documentación de Pandas](https://pandas.pydata.org/docs/)
-- 📖 [Documentación de Matplotlib](https://matplotlib.org/stable/contents.html)
-- 📖 [Google Colab FAQ](https://research.google.com/colaboratory/faq.html)
-- 📖 [Diccionario de Datos](TelecomX_diccionario.md)
-
----
-
-<div align="center">
-
-**⭐ Si este proyecto te fue útil, no olvides darle una estrella ⭐**
-
-**Hecho con ❤️ por el equipo de Data Science**
-
-</div>
+   
